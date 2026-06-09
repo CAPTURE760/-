@@ -50,10 +50,10 @@ export default function GomokuGame({ roomId, playerId }: { roomId: string; playe
 
   const fetchRoom = useCallback(async () => {
     try {
-      const res = await fetch('/api/game/join', {
+      const res = await fetch('/api/game', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ action: 'get', roomId }),
+        body: JSON.stringify({ action: 'get', id: roomId }),
       })
       const data = await res.json()
       if (!data.ok) { setError(data.error); return }
@@ -87,7 +87,7 @@ export default function GomokuGame({ roomId, playerId }: { roomId: string; playe
     setRoom(prev => prev ? { ...prev, board: newBoard, current: myRole === 'black' ? 'white' : 'black' } : prev)
 
     try {
-      const res = await fetch('/api/game/join', {
+      const res = await fetch('/api/game', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ action: 'move', roomId, playerId, index }),
@@ -123,7 +123,7 @@ export default function GomokuGame({ roomId, playerId }: { roomId: string; playe
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 flex flex-col items-center justify-center p-4">
       <div className="mb-4 text-center">
         <div className="text-sm text-slate-500 mb-1">room: <span className="font-mono font-bold text-slate-700">{roomId}</span></div>
-        <div className={\`inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-sm font-medium \${statusColor}\`}>
+        <div className={`inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-sm font-medium ${statusColor}`}>
           {statusLabel}
         </div>
         {room?.status === 'waiting' && (
@@ -137,7 +137,7 @@ export default function GomokuGame({ roomId, playerId }: { roomId: string; playe
       </div>
 
       <div className="bg-amber-50 rounded-2xl p-3 shadow-xl border-2 border-amber-200">
-        <div className="grid gap-0 relative" style={{ gridTemplateColumns: \`repeat(\${BOARD_SIZE}, 1fr)\` }}>
+        <div className="grid gap-0 relative" style={{ gridTemplateColumns: `repeat(${BOARD_SIZE}, 1fr)` }}>
           {Array.from({ length: BOARD_SIZE * BOARD_SIZE }).map((_, i) => {
             const row = Math.floor(i / BOARD_SIZE)
             const col = i % BOARD_SIZE
@@ -160,14 +160,14 @@ export default function GomokuGame({ roomId, playerId }: { roomId: string; playe
       </div>
 
       <div className="mt-4 flex gap-8 text-sm">
-        <div className={\`flex items-center gap-2 \${myRole === 'black' ? 'ring-2 ring-yellow-400 rounded-lg p-1' : ''}\`}>
+        <div className={`flex items-center gap-2 ${myRole === 'black' ? 'ring-2 ring-yellow-400 rounded-lg p-1' : ''}`}>
           <div className="w-3 h-3 rounded-full bg-slate-900" />
           <span className="text-slate-600">
             {room?.players.black === playerId ? 'you (black)' : room?.players.black ? 'opponent' : 'empty'}
           </span>
           {room?.current === 'black' && room?.status === 'playing' && <span className="text-xs text-green-500">playing</span>}
         </div>
-        <div className={\`flex items-center gap-2 \${myRole === 'white' ? 'ring-2 ring-yellow-400 rounded-lg p-1' : ''}\`}>
+        <div className={`flex items-center gap-2 ${myRole === 'white' ? 'ring-2 ring-yellow-400 rounded-lg p-1' : ''}`}>
           <div className="w-3 h-3 rounded-full bg-white border border-slate-300" />
           <span className="text-slate-600">
             {room?.players.white === playerId ? 'you (white)' : room?.players.white ? 'opponent' : 'empty'}

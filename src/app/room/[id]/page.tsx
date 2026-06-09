@@ -11,18 +11,20 @@ function generateId() {
 export default function RoomPage({ params }: { params: { id: string } }) {
   const router = useRouter()
   const [ready, setReady] = useState(false)
+  const [playerId, setPlayerId] = useState('')
 
   useEffect(() => {
-    let playerId = sessionStorage.getItem('playerId')
-    if (!playerId) {
-      playerId = generateId()
-      sessionStorage.setItem('playerId', playerId)
+    let pid = sessionStorage.getItem('playerId')
+    if (!pid) {
+      pid = generateId()
+      sessionStorage.setItem('playerId', pid)
     }
+    setPlayerId(pid)
 
     fetch('/api/game/join', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ action: 'join', roomId: params.id, playerId }),
+      body: JSON.stringify({ action: 'join', roomId: params.id, playerId: pid }),
     }).then(res => res.json()).then(data => {
       if (!data.ok) {
         router.push('/')
@@ -34,15 +36,15 @@ export default function RoomPage({ params }: { params: { id: string } }) {
 
   if (!ready) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-900 to-slate-800 flex items-center justify-center">
-        <div className="text-center">
-          <div className="text-5xl mb-4 animate-pulse">⏳</div>
-          <div className="text-slate-400">进入房间...</div>
-        </div>
-      </div>
-    )
-  }
+      <div className=" min-h-screen bg-gradient-to-br from-slate-900 to-slate-800 flex items-center justify-center\>
+ <div className=\text-center\>
+ <div className=\text-5xl mb-4 animate-pulse\>?</div>
+ <div className=\text-slate-400\>????...</div>
+ </div>
+ </div>
+ )
+ }
 
-  const GomokuGame = dynamic(() => import('@/app/components/GomokuGame'), { ssr: false })
-  return <GomokuGame roomId={params.id} playerId={sessionStorage.getItem('playerId') || ''} />
+ const GomokuGame = dynamic(() => import('@/app/components/GomokuGame'), { ssr: false })
+ return <GomokuGame roomId={params.id} playerId={playerId} />
 }

@@ -1,4 +1,4 @@
-﻿'use client'
+'use client'
 
 import { useState, useEffect, useCallback, useRef } from 'react'
 
@@ -103,14 +103,14 @@ export default function GomokuGame({ roomId, playerId }: { roomId: string; playe
   }
 
   if (loading) return (
-    <div className= min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 to-slate-100>
-      <div className=text-center><div className=text-4xl mb-4>...</div><div className=text-lg text-slate-600>connecting...</div></div>
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 to-slate-100">
+      <div className="text-center"><div className="text-4xl mb-4">...</div><div className="text-lg text-slate-600">connecting...</div></div>
     </div>
   )
 
   if (error) return (
-    <div className=min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 to-slate-100>
-      <div className=text-center><div className=text-4xl mb-4>error</div><div className=text-lg text-red-500 mb-4>{error}</div><a href=\/\ className=\px-4 py-2 bg-slate-900 text-white rounded-lg\>home</a></div>
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 to-slate-100">
+      <div className="text-center"><div className="text-4xl mb-4">error</div><div className="text-lg text-red-500 mb-4">{error}</div><a href="/" className="px-4 py-2 bg-slate-900 text-white rounded-lg">home</a></div>
     </div>
   )
 
@@ -124,64 +124,64 @@ export default function GomokuGame({ roomId, playerId }: { roomId: string; playe
     isMyTurn ? 'bg-green-100 text-green-700' : 'bg-slate-100 text-slate-500'
 
   return (
-    <div className=\min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 flex flex-col items-center justify-center p-4\>
-      <div className=\mb-4 text-center\>
-        <div className=\text-sm text-slate-500 mb-1\>room: <span className=\font-mono font-bold text-slate-700\>{roomId}</span></div>
-        <div className={inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-sm font-medium }>
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 flex flex-col items-center justify-center p-4">
+      <div className="mb-4 text-center">
+        <div className="text-sm text-slate-500 mb-1">room: <span className="font-mono font-bold text-slate-700">{roomId}</span></div>
+        <div className={`inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-sm font-medium ${statusColor}`}>
           {statusLabel}
         </div>
         {room?.status === 'waiting' && (
-          <div className=\mt-2 flex items-center justify-center gap-2\>
-            <span className=\text-xs text-slate-400\>share link with friend:</span>
-            <button onClick={copyLink} className=\text-xs px-3 py-1 bg-slate-800 text-white rounded-full hover:bg-slate-700 transition\>
+          <div className="mt-2 flex items-center justify-center gap-2">
+            <span className="text-xs text-slate-400">share link with friend:</span>
+            <button onClick={copyLink} className="text-xs px-3 py-1 bg-slate-800 text-white rounded-full hover:bg-slate-700 transition">
               {copied ? 'copied!' : 'copy link'}
             </button>
           </div>
         )}
       </div>
 
-      <div className=\bg-amber-50 rounded-2xl p-3 shadow-xl border-2 border-amber-200\>
-        <div className=\grid gap-0 relative\ style={{ gridTemplateColumns: epeat(, 1fr) }}>
+      <div className="bg-amber-50 rounded-2xl p-3 shadow-xl border-2 border-amber-200">
+        <div className="grid gap-0 relative" style={{ gridTemplateColumns: `repeat(${BOARD_SIZE}, 1fr)` }}>
           {Array.from({ length: BOARD_SIZE * BOARD_SIZE }).map((_, i) => {
             const row = Math.floor(i / BOARD_SIZE)
             const col = i % BOARD_SIZE
             return (
               <div key={i}
-                className=\w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center relative cursor-pointer\
+                className="w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center relative cursor-pointer"
                 onClick={() => handleClick(row, col)}>
-                <div className=\absolute inset-0 flex items-center\>
-                  {col < BOARD_SIZE - 1 && <div className=\w-full h-px bg-slate-300 absolute\ />}
+                <div className="absolute inset-0 flex items-center">
+                  {col < BOARD_SIZE - 1 && <div className="w-full h-px bg-slate-300 absolute" />}
                 </div>
-                <div className=\absolute inset-0 flex justify-center\>
-                  {row < BOARD_SIZE - 1 && <div className=\h-full w-px bg-slate-300 absolute\ />}
+                <div className="absolute inset-0 flex justify-center">
+                  {row < BOARD_SIZE - 1 && <div className="h-full w-px bg-slate-300 absolute" />}
                 </div>
-                {room?.board[i] && <div className=\relative z-10\><CellDot cell={room.board[i]} /></div>}
-                {isWinCell(row, col, room?.winLine) && <div className=\absolute inset-0 z-20 bg-yellow-400/40 rounded-full animate-pulse\ />}
+                {room?.board[i] && <div className="relative z-10"><CellDot cell={room.board[i]} /></div>}
+                {isWinCell(row, col, room?.winLine) && <div className="absolute inset-0 z-20 bg-yellow-400/40 rounded-full animate-pulse" />}
               </div>
             )
           })}
         </div>
       </div>
 
-      <div className=\mt-4 flex gap-8 text-sm\>
-        <div className={lex items-center gap-2 }>
-          <div className=\w-3 h-3 rounded-full bg-slate-900\ />
-          <span className=\text-slate-600\>
+      <div className="mt-4 flex gap-8 text-sm">
+        <div className={`flex items-center gap-2 ${myRole === 'black' ? 'ring-2 ring-yellow-400 rounded-lg p-1' : ''}`}>
+          <div className="w-3 h-3 rounded-full bg-slate-900" />
+          <span className="text-slate-600">
             {room?.players.black === playerId ? 'you (black)' : room?.players.black ? 'opponent' : 'empty'}
           </span>
-          {room?.current === 'black' && room?.status === 'playing' && <span className=\text-xs text-green-500\>playing</span>}
+          {room?.current === 'black' && room?.status === 'playing' && <span className="text-xs text-green-500">playing</span>}
         </div>
-        <div className={lex items-center gap-2 }>
-          <div className=\w-3 h-3 rounded-full bg-white border border-slate-300\ />
-          <span className=\text-slate-600\>
+        <div className={`flex items-center gap-2 ${myRole === 'white' ? 'ring-2 ring-yellow-400 rounded-lg p-1' : ''}`}>
+          <div className="w-3 h-3 rounded-full bg-white border border-slate-300" />
+          <span className="text-slate-600">
             {room?.players.white === playerId ? 'you (white)' : room?.players.white ? 'opponent' : 'empty'}
           </span>
-          {room?.current === 'white' && room?.status === 'playing' && <span className=\text-xs text-green-500\>playing</span>}
+          {room?.current === 'white' && room?.status === 'playing' && <span className="text-xs text-green-500">playing</span>}
         </div>
       </div>
 
       {room?.status === 'ended' && (
-        <a href=\/\ className=\mt-4 px-6 py-2 bg-slate-900 text-white rounded-lg hover:bg-slate-800 transition text-sm\>
+        <a href="/" className="mt-4 px-6 py-2 bg-slate-900 text-white rounded-lg hover:bg-slate-800 transition text-sm">
           play again
         </a>
       )}

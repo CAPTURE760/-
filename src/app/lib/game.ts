@@ -60,7 +60,7 @@ export function makeMove(id: string, playerId: string, index: number): Room | nu
   const room = rooms.get(id)
   if (!room || room.status !== 'playing') return null
 
-  const player: Player = room.players.black === playerId ? 'black'
+  const player: Player | null = room.players.black === playerId ? 'black'
     : room.players.white === playerId ? 'white'
     : null
   if (!player || room.current !== player) return null

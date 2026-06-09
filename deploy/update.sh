@@ -6,7 +6,7 @@ GIT_REPO="git@github.com:CAPTURE760/-.git"
 PROJECT_DIR="$HOME/gomoku"
 DOCKER_IMAGE="gomoku:latest"
 CONTAINER_NAME="gomoku-container"
-HOST_PORT=3003
+HOST_PORT=3002
 CONTAINER_PORT=3000
 # ============================
 
